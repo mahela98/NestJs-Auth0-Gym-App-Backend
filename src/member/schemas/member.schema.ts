@@ -6,4 +6,6 @@ export const MemberSchema = new mongoose.Schema({
   mobile: String,
   address: String,
   date_posted: String,
-});
+}
+,{timestamps:true}
+);

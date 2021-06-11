@@ -1,6 +1,6 @@
 import { Controller, Get, Res, HttpStatus, Param, NotFoundException, Post, Body, Put, Query, Delete } from '@nestjs/common';
 import { MemberService } from './member.service';
-import { CreatePostDTO } from './dto/create-post.dto';
+import { CreateMemberDTO } from './dto/create-member.dto';
 import { ValidateObjectId } from './shared/pipes/validate-object-id.pipes';
     
 @Controller('member')
@@ -8,62 +8,62 @@ export class MemberController {
     
   constructor(private memberService: MemberService) { }
     
-  // Submit a post
-  @Post('/post')
-  async addPost(@Res() res, @Body() createPostDTO: CreatePostDTO) {
-    const newPost = await this.memberService.addPost(createPostDTO);
+  // Submit a member
+  @Post('/create')
+  async addMember(@Res() res, @Body() createMemberDTO: CreateMemberDTO) {
+    const newMember = await this.memberService.addMember(createMemberDTO);
     return res.status(HttpStatus.OK).json({
-      message: 'Post has been submitted successfully!',
-      post: newPost,
+      message: 'Member has been submitted successfully!',
+      member: newMember,
     });
   }
 
-   // Edit a particular post using ID
+   // Edit a particular member using ID
    @Put('/edit')
-   async editPost(
+   async editMember(
      @Res() res,
-     @Query('postID', new ValidateObjectId()) postID,
-     @Body() createPostDTO: CreatePostDTO,
+     @Query('memberID', new ValidateObjectId()) memberID,
+     @Body() createMemberDTO: CreateMemberDTO,
    ) {
-     const editedPost = await this.memberService.editPost(postID, createPostDTO);
-     if (!editedPost) {
-         throw new NotFoundException('Post does not exist!');
+     const editedMember = await this.memberService.editMember(memberID, createMemberDTO);
+     if (!editedMember) {
+         throw new NotFoundException('Member does not exist!');
      }
      return res.status(HttpStatus.OK).json({
-       message: 'Post has been successfully updated',
-       post: editedPost,
+       message: 'Member has been successfully updated',
+       member: editedMember,
      });
    }
 
-    // Delete a post using ID
+    // Delete a member using ID
     @Delete('/delete')
-    async deletePost(@Res() res, @Query('postID', new ValidateObjectId()) postID) {
-      const deletedPost = await this.memberService.deletePost(postID);
-      if (!deletedPost) {
-          throw new NotFoundException('Post does not exist!');
+    async deleteMember(@Res() res, @Query('memberID', new ValidateObjectId()) memberID) {
+      const deletedMember = await this.memberService.deleteMember(memberID);
+      if (!deletedMember) {
+          throw new NotFoundException('Member does not exist!');
       }
       return res.status(HttpStatus.OK).json({
-        message: 'Post has been deleted!',
-        post: deletedPost,
+        message: 'Member has been deleted!',
+        member: deletedMember,
       });
     } 
 
 
     
-  // Fetch a particular post using ID
-  @Get('post/:postID')
-  async getPost(@Res() res, @Param('postID', new ValidateObjectId()) postID) {
-    const post = await this.memberService.getPost(postID);
-    if (!post) {
-        throw new NotFoundException('Post does not exist!'); 
+  // Fetch a particular member using ID
+  @Get('/:memberID')
+  async getMember(@Res() res, @Param('memberID', new ValidateObjectId()) memberID) {
+    const member = await this.memberService.getMember(memberID);
+    if (!member) {
+        throw new NotFoundException('Member does not exist!'); 
     }
-    return res.status(HttpStatus.OK).json(post);
+    return res.status(HttpStatus.OK).json(member);
   }
     
-  // Fetch all posts
-  @Get('posts')
-  async getPosts(@Res() res) {
-    const posts = await this.memberService.getPosts();
-    return res.status(HttpStatus.OK).json(posts);
+  // Fetch all members
+  @Get('/')
+  async getMembers(@Res() res) {
+    const members = await this.memberService.getMembers();
+    return res.status(HttpStatus.OK).json(members);
   }
 }

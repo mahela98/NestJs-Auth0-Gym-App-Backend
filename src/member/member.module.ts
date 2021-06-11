@@ -6,7 +6,7 @@ import { MemberSchema } from './schemas/member.schema'; // and this
     
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: 'Post', schema: MemberSchema }]),
+        MongooseModule.forFeature([{ name: 'Member', schema: MemberSchema }]),
     ], // add 
   providers: [MemberService],
   controllers: [MemberController],

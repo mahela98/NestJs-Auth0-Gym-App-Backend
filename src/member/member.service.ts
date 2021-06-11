@@ -1,40 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Post } from './interfaces/post.inteface';
-import { CreatePostDTO } from './dto/create-post.dto';
+import { Member } from './interfaces/member.inteface';
+import { CreateMemberDTO } from './dto/create-member.dto';
 
 @Injectable()
 export class MemberService {
-  constructor(@InjectModel('Post') private readonly postModel: Model<Post>) {}
+  constructor(@InjectModel('Member') private readonly memberModel: Model<Member>) {}
 
-  async addPost(createPostDTO: CreatePostDTO): Promise<Post> {
-    const newPost = await new this.postModel(createPostDTO);
-    return newPost.save();
+  async addMember(createMemberDTO: CreateMemberDTO): Promise<Member> {
+    const newMember = await new this.memberModel(createMemberDTO);
+    return newMember.save();
   }
 
-  async getPost(postID): Promise<Post> {
-    const post = await this.postModel.findById(postID).exec();
-    return post;
+  async getMember(memberID): Promise<Member> {
+    const member = await this.memberModel.findById(memberID).exec();
+    return member;
   }
 
-  async getPosts(): Promise<Post[]> {
-    const posts = await this.postModel.find().exec();
-    return posts;
+  async getMembers(): Promise<Member[]> {
+    const members = await this.memberModel.find().exec();
+    return members;
   }
 
-  async editPost(postID, createPostDTO: CreatePostDTO): Promise<Post> {
-    const editedPost = await this.postModel.findByIdAndUpdate(
-      postID,
-      createPostDTO,
+  async editMember(memberID, createMemberDTO: CreateMemberDTO): Promise<Member> {
+    const editedMember = await this.memberModel.findByIdAndUpdate(
+      memberID,
+      createMemberDTO,
       { new: true },
     );
-    return editedPost;
+    return editedMember;
   }
 
-  async deletePost(postID): Promise<any> {
-    const deletedPost = await this.postModel.findByIdAndRemove(postID);
-    return deletedPost;
+  async deleteMember(memberID): Promise<any> {
+    const deletedMember = await this.memberModel.findByIdAndRemove(memberID);
+    return deletedMember;
   }
   
 }
