@@ -12,6 +12,7 @@ import { MembershipTypeModule } from './membership-type/membership-type.module';
     MemberModule,
     MongooseModule.forRoot('mongodb://localhost/nest-blog-project', {
       useNewUrlParser: true,
+      useFindAndModify: false,
     }),
     MembershipTypeModule,
     
