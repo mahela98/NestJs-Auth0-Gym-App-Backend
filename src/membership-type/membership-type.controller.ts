@@ -36,10 +36,10 @@ export class MembershipTypeController {
   }
 
   // Edit a particular MambershipType using ID
-  @Put('/membershiptype/edit')
+  @Put('/membershiptype/edit/:MambershipTypeID')
   async editMambershipType(
     @Res() res,
-    @Query('MambershipTypeID', new ValidateObjectId()) MambershipTypeID,
+    @Param('MambershipTypeID', new ValidateObjectId()) MambershipTypeID,
     @Body() createMambershipTypeDTO: CreateMambershipTypeDTO,
   ) {
     const editedMambershipType =
@@ -55,8 +55,6 @@ export class MembershipTypeController {
       MambershipType: editedMambershipType,
     });
   }
-
-
 
   // Delete a MambershipType using ID
   @Delete('/membershiptype/delete/:MambershipTypeID')
