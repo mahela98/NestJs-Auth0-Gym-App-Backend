@@ -8,10 +8,7 @@ import { MembershipTypeModule } from './membership-type/membership-type.module';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/nest-blog-project', {
-      connectionFactory: (connection) => {
-        connection.plugin(require('mongoose-autopopulate'));
-        return connection;
-      },
+      
       useNewUrlParser: true,
       useFindAndModify: false,
     }),
