@@ -17,7 +17,7 @@ import { Document } from 'mongoose';
 
 export type MembershipTypeSchema = MembershipType & Document;
 
-@Schema()
+@Schema({timestamps:true})
 export class MembershipType {
   @Prop()
   type: string;

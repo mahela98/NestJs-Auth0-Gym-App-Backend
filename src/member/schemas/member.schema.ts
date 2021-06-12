@@ -4,7 +4,7 @@ import { MembershipType } from '../../membership-type/schemas/membershipType.sch
 
 export type MemberSchema = Member & Document;
 
-@Schema()
+@Schema({timestamps:true})
 export class Member {
   @Prop()
   name: string;
