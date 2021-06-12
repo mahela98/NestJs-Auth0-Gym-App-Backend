@@ -5,20 +5,20 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MemberModule } from './member/member.module';
 import { MembershipTypeModule } from './membership-type/membership-type.module';
 
-
-
 @Module({
   imports: [
-    MemberModule,
     MongooseModule.forRoot('mongodb://localhost/nest-blog-project', {
+      connectionFactory: (connection) => {
+        connection.plugin(require('mongoose-autopopulate'));
+        return connection;
+      },
       useNewUrlParser: true,
       useFindAndModify: false,
     }),
     MembershipTypeModule,
-    
-    
+    MemberModule,
   ],
-  controllers: [AppController], 
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

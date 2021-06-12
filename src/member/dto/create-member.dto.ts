@@ -1,7 +1,10 @@
+// import { CreateMambershipTypeDTO } from '../../membership-type/dto/create-membershipType.dto'
+
 export class CreateMemberDTO {
     readonly name: string;
     readonly email: string;
     readonly mobile: string;
     readonly address: string;
     readonly date_posted: string;
+    readonly membershiptype: string;
   }

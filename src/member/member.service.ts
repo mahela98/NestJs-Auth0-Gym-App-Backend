@@ -19,7 +19,7 @@ export class MemberService {
   }
 
   async getMembers(): Promise<Member[]> {
-    const members = await this.memberModel.find().exec();
+    const members = await this.memberModel.find().populate('membershiptype').exec();
     return members;
   }
 
