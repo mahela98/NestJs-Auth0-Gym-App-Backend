@@ -14,7 +14,7 @@ export class MemberService {
   }
 
   async getMember(memberID): Promise<Member> {
-    const member = await this.memberModel.findById(memberID).exec();
+    const member = await this.memberModel.findById(memberID).populate('membershiptype').exec();
     return member;
   }
 

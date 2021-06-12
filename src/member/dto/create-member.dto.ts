@@ -1,4 +1,3 @@
-// import { CreateMambershipTypeDTO } from '../../membership-type/dto/create-membershipType.dto'
 
 export class CreateMemberDTO {
     readonly name: string;
