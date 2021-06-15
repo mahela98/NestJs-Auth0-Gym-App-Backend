@@ -6,21 +6,17 @@ export type MemberSchema = Member & Document;
 
 @Schema({timestamps:true})
 export class Member {
-  @Prop()
+  @Prop({ required: true })
   name: string;
-
-  @Prop()
+  @Prop({ required: true })
   email: string;
-
   @Prop()
   mobile: string;
   @Prop()
   address: string;
   @Prop()
   date_posted: string;
-
   @Prop({ type: [{ type: Types.ObjectId, ref: 'MembershipType' }] })
   membershiptype: MembershipType;
 }
-
 export const MemberSchema = SchemaFactory.createForClass(Member);

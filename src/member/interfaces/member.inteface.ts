@@ -1,5 +1,4 @@
 import { Document } from 'mongoose';
-import { MembershipType } from '../../membership-type/interfaces/mambershipType.interface'
     
 export interface Member extends Document {
   readonly name: string;
