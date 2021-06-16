@@ -12,16 +12,31 @@ import {
   Delete,
 } from '@nestjs/common';
 import { MemberService } from './member.service';
+import { MembershipTypeService } from '../membership-type/membership-type.service';
 import { CreateMemberDTO } from './dto/create-member.dto';
 import { ValidateObjectId } from './shared/pipes/validate-object-id.pipes';
 
 @Controller('member')
 export class MemberController {
-  constructor(private memberService: MemberService) {}
+  constructor(
+    private membershipTypeService: MembershipTypeService,    private memberService: MemberService,
+    
+  ) {}
 
   // Submit a member
   @Post('/create')
   async addMember(@Res() res, @Body() createMemberDTO: CreateMemberDTO) {
+    //have to validate membertypr id
+    // const membershiptype = await this.membershipTypeService.getMembershipType(
+    //   createMemberDTO.membershiptype,
+    // );
+    // if (!membershiptype) {
+    //   // throw new NotFoundException('Membership type does not exist!');
+    //   console.log("mem");
+    // }
+    // if(membershiptype){
+    //   console.log(createMemberDTO.membershiptype);
+    // }
     const newMember = await this.memberService.addMember(createMemberDTO);
     return res.status(HttpStatus.OK).json({
       message: 'Member has been submitted successfully!',

@@ -1,23 +1,34 @@
-import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common';
 import { MemberService } from './member.service';
+import { MembershipTypeService } from '../membership-type/membership-type.service';
 import { MemberController } from './member.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { MemberSchema } from './schemas/member.schema'; 
-import { AuthenticationMiddleware } from 'src/common/authentication.middleware';
-    
-@Module({
-    imports: [
-        MongooseModule.forFeature([{ name: 'Member', schema: MemberSchema }]),
-    ], 
-  providers: [MemberService],
-  controllers: [MemberController],
-})
+import { MembershipTypeController } from '../membership-type/membership-type.controller';
 
+import { MongooseModule } from '@nestjs/mongoose';
+import { MemberSchema } from './schemas/member.schema';
+import { MembershipTypeSchema } from '../membership-type/schemas/membershipType.schema';
+import { AuthenticationMiddleware } from 'src/common/authentication.middleware';
+
+@Module({
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'Member', schema: MemberSchema },
+      { name: 'MembershipType', schema: MembershipTypeSchema },
+    ]),
+  ],
+  providers: [MemberService, MembershipTypeService],
+  controllers: [MemberController, MembershipTypeController],
+})
 export class MemberModule {}
 
 // export class MemberModule  implements NestModule {
 
-//   //auth0 middleware 
+//   //auth0 middleware
 //     configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
 //       consumer.apply(AuthenticationMiddleware).forRoutes(
 //         { method: RequestMethod.POST, path: '/member/create' },

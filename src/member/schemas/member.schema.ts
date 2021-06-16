@@ -4,7 +4,7 @@ import { MembershipType } from '../../membership-type/schemas/membershipType.sch
 
 export type MemberSchema = Member & Document;
 
-@Schema({timestamps:true})
+@Schema({ timestamps: true })
 export class Member {
   @Prop({ required: true })
   name: string;
@@ -20,9 +20,13 @@ export class Member {
   membershiptype: MembershipType;
 }
 
-
 export const MemberSchema = SchemaFactory.createForClass(Member);
 
-MemberSchema.pre <Member>("save", async function (next) {
-  console.log(this.name);
-})
+// MemberSchema.pre<Member>('save', async function (next) {
+//   console.log(this.membershiptype);
+//   console.log(this.membershiptype.toString() === '');
+
+//   if (this.membershiptype.toString() != '') {
+   
+//   }
+// });
