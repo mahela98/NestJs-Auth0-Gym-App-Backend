@@ -19,4 +19,10 @@ export class Member {
   @Prop({ type: [{ type: Types.ObjectId, ref: 'MembershipType' }] })
   membershiptype: MembershipType;
 }
+
+
 export const MemberSchema = SchemaFactory.createForClass(Member);
+
+MemberSchema.pre <Member>("save", async function (next) {
+  console.log(this.name);
+})
