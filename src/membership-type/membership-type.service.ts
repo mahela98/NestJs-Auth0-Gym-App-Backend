@@ -24,8 +24,19 @@ export class MembershipTypeService {
     const membershipType = await this.membershipTypeModel
       .findById(membershipTypeID)
       .exec();
+    if (!membershipType) {
+      console.log('my error');
+    }else{
+      console.log('no error');
+
+    }
     return membershipType;
   }
+
+  // async countMembershipType(membershipTypeID): Promise<MembershipType> {
+  //   const membershipType = await this.membershipTypeModel.count(membershipTypeID).exec();
+  //   return membershipType;
+  // }
 
   async editMembershipType(
     membershipTypeID,
