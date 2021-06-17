@@ -12,8 +12,8 @@ import {
   Delete,
   Req,
 } from '@nestjs/common';
-import mongoose from "mongoose";
-import {Types} from "mongoose";
+import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 import { MemberService } from './member.service';
 import { MembershipTypeService } from '../membership-type/membership-type.service';
 import { CreateMemberDTO } from './dto/create-member.dto';
@@ -33,7 +33,8 @@ export class MemberController {
     try {
       const MambershipType = await this.membershipTypeService.getMembershipType(
         createMemberDTO.membershiptype,
-      ); 
+      );
+
       const newMember = await this.memberService.addMember(createMemberDTO);
       return res.status(HttpStatus.OK).json({
         message: 'Member has been submitted successfully!',
@@ -42,9 +43,6 @@ export class MemberController {
     } catch (error) {
       throw new NotFoundException('MambershipType does not exist!');
     }
-    
-    
-    //
   }
 
   // Edit a particular member using ID
@@ -54,6 +52,15 @@ export class MemberController {
     @Param('memberID', new ValidateObjectId()) memberID,
     @Body() createMemberDTO: CreateMemberDTO,
   ) {
+    //checking the membership Id
+    try {
+      const MambershipType = await this.membershipTypeService.getMembershipType(
+        createMemberDTO.membershiptype,
+      );
+    } catch (error) {
+      throw new NotFoundException('MambershipType does not exist!');
+    }
+
     const editedMember = await this.memberService.editMember(
       memberID,
       createMemberDTO,

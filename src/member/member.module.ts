@@ -24,7 +24,9 @@ import { AuthenticationMiddleware } from 'src/common/authentication.middleware';
   providers: [MemberService, MembershipTypeService],
   controllers: [MemberController, MembershipTypeController],
 })
-export class MemberModule {}
+export class MemberModule {}  //comment 
+
+//----- uncomment following to add AUTH0 validation
 
 // export class MemberModule  implements NestModule {
 
