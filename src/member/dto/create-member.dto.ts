@@ -22,18 +22,27 @@ import { Type } from 'class-transformer';
 import { CreateMambershipTypeDTO } from '../../membership-type/dto/create-membershipType.dto';
 import { strict } from 'assert';
 
-class AddressDTO{
+class AddressDTO {
   @IsNotEmpty()
   @IsString()
-  line1:string;
+  line1: string;
 
   @IsNotEmpty()
   @IsString()
-  line2:string;
+  line2: string;
 
   @IsNotEmpty()
   @IsString()
-  city:string;
+  city: string;
+}
+class NationalityDTO {
+  @IsNotEmpty()
+  @IsString()
+  passport_number: string;
+
+  @IsNotEmpty()
+  @IsString()
+  nic_number: string;
 }
 
 export class CreateMemberDTO {
@@ -58,16 +67,27 @@ export class CreateMemberDTO {
   @IsNotEmpty()
   readonly mobile: string;
 
-  
   @IsNotEmpty()
   @IsDefined()
   @IsNotEmptyObject()
   @IsObject()
   @ValidateNested()
   @Type(() => AddressDTO)
-  readonly address : AddressDTO;
+  readonly address: AddressDTO;
 
-  @IsOptional()
+  @IsNotEmpty()
+  @IsDefined()
+  @IsNotEmptyObject()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => NationalityDTO)
+  readonly nationality: NationalityDTO;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly occupation: string;
+
+  @IsNotEmpty()
   @IsISO8601({ strict: true })
   @Matches(/^\d{4}(-)(((0)[0-9])|((1)[0-2]))(-)([0-2][0-9]|(3)[0-1])$/i, {
     message: 'date must be formatted as yyyy-mm-dd',

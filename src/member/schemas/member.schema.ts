@@ -22,6 +22,9 @@ export class Member {
   @Prop()
   mobile: string;
 
+  @Prop()
+  occupation: string;
+
   @Prop(
     raw({
       line1: { type: String },
@@ -30,6 +33,14 @@ export class Member {
     }),
   )
   address: Record<string, any>;
+
+  @Prop(
+    raw({
+      passport_number: { type: String },
+      nic_number: { type: String },
+    }),
+  )
+  nationality: Record<string, any>;
 
   @Prop({ default: new Date(Date.now()) })
   @IsDateString()
