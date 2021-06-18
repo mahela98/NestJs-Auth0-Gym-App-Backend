@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsDateString, IsDefined } from 'class-validator';
 import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 import { MembershipType } from '../../membership-type/schemas/membershipType.schema';
 
@@ -14,8 +15,12 @@ export class Member {
   mobile: string;
   @Prop()
   address: string;
-  @Prop()
-  date_posted: string;
+
+  
+  @Prop({ default: new Date(Date.now()) })
+  @IsDateString()
+  birthday: Date;
+  
   @Prop({ type: [{ type: Types.ObjectId, ref: 'MembershipType' }] })
   membershiptype: MembershipType;
 }
@@ -27,6 +32,6 @@ export const MemberSchema = SchemaFactory.createForClass(Member);
 //   console.log(this.membershiptype.toString() === '');
 
 //   if (this.membershiptype.toString() != '') {
-   
+
 //   }
 // });
