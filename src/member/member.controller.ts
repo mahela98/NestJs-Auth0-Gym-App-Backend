@@ -32,8 +32,9 @@ export class MemberController {
     @Res() res,
     @Query('version') version,
     @Query('iso') iso,
+    @Query('ass') ass= 10,
   ) {
-    return res.status(HttpStatus.OK).json( [version,iso]);
+    return res.status(HttpStatus.OK).json( [version,iso,ass]);
   }
 
   // Submit a member
