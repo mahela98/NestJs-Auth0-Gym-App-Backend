@@ -26,6 +26,16 @@ export class MemberController {
     private memberService: MemberService,
   ) {}
 
+  //custome quary request
+  @Get('/quary/')
+  async getMember2(
+    @Res() res,
+    @Query('version') version,
+    @Query('iso') iso,
+  ) {
+    return res.status(HttpStatus.OK).json( [version,iso]);
+  }
+
   // Submit a member
   @Post('/create')
   async addMember(@Res() res, @Body() createMemberDTO: CreateMemberDTO) {
