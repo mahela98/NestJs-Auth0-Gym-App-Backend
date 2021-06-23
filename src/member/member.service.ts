@@ -31,12 +31,15 @@ export class MemberService {
     return members;
   }
   // gh
-  async getMembersPagination(options): Promise<Member[]> {
+  async getMembersPagination(options,pageNumber,dataLimit): Promise<Member[]> {
     
     const members = await this.memberModel
       .find(options)
       .populate('membershiptype')
-      .exec();
+      .skip((pageNumber-1)*dataLimit).limit(dataLimit).exec();
+
+    
+
     return members;
   }
 
@@ -55,5 +58,9 @@ export class MemberService {
   async deleteMember(memberID): Promise<any> {
     const deletedMember = await this.memberModel.findByIdAndRemove(memberID);
     return deletedMember;
+  }
+
+  async countAll(options){
+    return this.memberModel.count(options).exec();
   }
 }

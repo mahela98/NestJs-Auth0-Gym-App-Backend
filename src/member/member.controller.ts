@@ -19,7 +19,7 @@ import { MemberService } from './member.service';
 import { MembershipTypeService } from '../membership-type/membership-type.service';
 import { CreateMemberDTO } from './dto/create-member.dto';
 import { ValidateObjectId } from './shared/pipes/validate-object-id.pipes';
-
+ 
 
 @Controller('member')
 export class MemberController {
@@ -37,6 +37,8 @@ export class MemberController {
     @Query('search') search,
   ) {
     var options={};
+    const pageNumber:number = parseInt(page as any) || 1; 
+    const dataLimit:number = parseInt(limit as any) || 10; 
     if(search){
       options={
           $or:[
@@ -45,9 +47,12 @@ export class MemberController {
           ]
       }
     }
-    // return res.status(HttpStatus.OK).json( [search]);
-    const members = await this.memberService.getMembersPagination(options);
-    return res.status(HttpStatus.OK).json(members);
+    // return res.status(HttpStatus.OK).json( [page]);
+    const members = await this.memberService.getMembersPagination(options,pageNumber,dataLimit);
+
+    const total = await this.memberService.countAll(options);
+
+    return res.status(HttpStatus.OK).json({members,total,pageNumber,last_page:Math.ceil(total/dataLimit)});
   }
 
   // Submit a member
