@@ -1,5 +1,6 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsDateString, IsDefined } from 'class-validator';
+import { memory } from 'console';
 import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 import { MembershipType } from '../../membership-type/schemas/membershipType.schema';
 
@@ -27,7 +28,7 @@ export class Member {
 
   @Prop(
     raw({
-      line1: { type: String },
+      line1: { type: String }, 
       line2: { type: String },
       city: { type: String },
     }),
@@ -49,6 +50,8 @@ export class Member {
   @Prop({ type: [{ type: Types.ObjectId, ref: 'MembershipType' }] })
   membershiptype: MembershipType;
 }
+
+
 
 export const MemberSchema = SchemaFactory.createForClass(Member);
 

@@ -11,6 +11,7 @@ import {
   Query,
   Delete,
   Req,
+  UseInterceptors,
 } from '@nestjs/common';
 import mongoose from 'mongoose';
 import { Types } from 'mongoose';
@@ -18,6 +19,7 @@ import { MemberService } from './member.service';
 import { MembershipTypeService } from '../membership-type/membership-type.service';
 import { CreateMemberDTO } from './dto/create-member.dto';
 import { ValidateObjectId } from './shared/pipes/validate-object-id.pipes';
+
 
 @Controller('member')
 export class MemberController {
@@ -30,11 +32,22 @@ export class MemberController {
   @Get('/quary/')
   async getMember2(
     @Res() res,
-    @Query('version') version,
-    @Query('iso') iso,
-    @Query('ass') ass= 10,
+    @Query('page') page,
+    @Query('limit') limit,
+    @Query('search') search,
   ) {
-    return res.status(HttpStatus.OK).json( [version,iso,ass]);
+    var options={};
+    if(search){
+      options={
+          $or:[
+            {first_name: new RegExp(search.toString() , 'i')},
+            {last_name: new RegExp(search.toString() , 'i')},
+          ]
+      }
+    }
+    // return res.status(HttpStatus.OK).json( [search]);
+    const members = await this.memberService.getMembersPagination(options);
+    return res.status(HttpStatus.OK).json(members);
   }
 
   // Submit a member
