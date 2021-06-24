@@ -23,7 +23,7 @@ export class MemberService {
     return member;
   }
 
-  async getMembers(): Promise<Member[]> {
+  async getAllMembers(): Promise<Member[]> {
     const members = await this.memberModel
       .find()
       .populate('membershiptype')
@@ -32,7 +32,7 @@ export class MemberService {
   }
   // gh
   async getMembersPagination(options,pageNumber,dataLimit): Promise<Member[]> {
-    
+    console.log(options);
     const members = await this.memberModel
       .find(options)
       .populate('membershiptype')
@@ -61,6 +61,6 @@ export class MemberService {
   }
 
   async countAll(options){
-    return this.memberModel.count(options).exec();
+    return this.memberModel.countDocuments(options).exec();
   }
 }

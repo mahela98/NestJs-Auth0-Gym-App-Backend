@@ -19,7 +19,6 @@ import { MemberService } from './member.service';
 import { MembershipTypeService } from '../membership-type/membership-type.service';
 import { CreateMemberDTO } from './dto/create-member.dto';
 import { ValidateObjectId } from './shared/pipes/validate-object-id.pipes';
- 
 
 @Controller('member')
 export class MemberController {
@@ -27,33 +26,6 @@ export class MemberController {
     private membershipTypeService: MembershipTypeService,
     private memberService: MemberService,
   ) {}
-
-  //custome quary request
-  @Get('/quary/')
-  async getMember2(
-    @Res() res,
-    @Query('page') page,
-    @Query('limit') limit,
-    @Query('search') search,
-  ) {
-    var options={};
-    const pageNumber:number = parseInt(page as any) || 1; 
-    const dataLimit:number = parseInt(limit as any) || 10; 
-    if(search){
-      options={
-          $or:[
-            {first_name: new RegExp(search.toString() , 'i')},
-            {last_name: new RegExp(search.toString() , 'i')},
-          ]
-      }
-    }
-    // return res.status(HttpStatus.OK).json( [page]);
-    const members = await this.memberService.getMembersPagination(options,pageNumber,dataLimit);
-
-    const total = await this.memberService.countAll(options);
-
-    return res.status(HttpStatus.OK).json({members,total,pageNumber,last_page:Math.ceil(total/dataLimit)});
-  }
 
   // Submit a member
   @Post('/create')
@@ -132,10 +104,92 @@ export class MemberController {
     return res.status(HttpStatus.OK).json(member);
   }
 
-  // Fetch all members
   @Get('/')
-  async getMembers(@Res() res) {
-    const members = await this.memberService.getMembers();
+  async getMembers(
+    @Res() res,
+    @Query('page') page,
+    @Query('limit') limit,
+    @Query('namesearch') namesearch,
+    @Query('nationalitySearch') nationalitySearch,
+  ) {
+    var options = {};
+    const pageNumber: number = parseInt(page as any) || 1;
+    const dataLimit: number = parseInt(limit as any) || 10;
+
+    if (nationalitySearch && namesearch) {
+      options = {
+        $and: [
+          {
+            $or: [
+              {
+                'nationality.passport_number': new RegExp(
+                  nationalitySearch.toString(),
+                  'i',
+                ),
+              },
+              {
+                'nationality.nic_number': new RegExp(
+                  nationalitySearch.toString(),
+                  'i',
+                ),
+              },
+            ],
+          },
+          {
+            $or: [
+              { first_name: new RegExp(namesearch.toString(), 'i') },
+              { last_name: new RegExp(namesearch.toString(), 'i') },
+              { middle_name: new RegExp(namesearch.toString(), 'i') },
+            ],
+          },
+        ],
+      };
+    } else if (namesearch) {
+      options = {
+        $or: [
+          { first_name: new RegExp(namesearch.toString(), 'i') },
+          { last_name: new RegExp(namesearch.toString(), 'i') },
+          { middle_name: new RegExp(namesearch.toString(), 'i') },
+        ],
+      };
+    } else if (nationalitySearch) {
+      options = {
+        $or: [
+          {
+            'nationality.passport_number': new RegExp(
+              nationalitySearch.toString(),
+              'i',
+            ),
+          },
+          {
+            'nationality.nic_number': new RegExp(
+              nationalitySearch.toString(),
+              'i',
+            ),
+          },
+        ],
+      };
+    }
+
+    // return res.status(HttpStatus.OK).json( [page]);
+    const members = await this.memberService.getMembersPagination(
+      options,
+      pageNumber,
+      dataLimit,
+    );
+    const total = await this.memberService.countAll(options);
+    return res.status(HttpStatus.OK).json({
+      members,
+      total,
+      pageNumber,
+      last_page: Math.ceil(total / dataLimit),
+    });
+  }
+
+  // Fetch all members
+  @Get('/all/')
+  async getAllMembers(@Res() res) {
+    const members = await this.memberService.getAllMembers();
     return res.status(HttpStatus.OK).json(members);
   }
 }
