@@ -28,7 +28,7 @@ export class Member {
 
   @Prop(
     raw({
-      line1: { type: String }, 
+      line1: { type: String },
       line2: { type: String },
       city: { type: String },
     }),
@@ -51,15 +51,4 @@ export class Member {
   membershiptype: MembershipType;
 }
 
-
-
 export const MemberSchema = SchemaFactory.createForClass(Member);
-
-// MemberSchema.pre<Member>('save', async function (next) {
-//   console.log(this.membershiptype);
-//   console.log(this.membershiptype.toString() === '');
-
-//   if (this.membershiptype.toString() != '') {
-
-//   }
-// });

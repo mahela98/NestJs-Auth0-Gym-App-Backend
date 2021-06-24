@@ -170,8 +170,6 @@ export class MemberController {
         ],
       };
     }
-
-    // return res.status(HttpStatus.OK).json( [page]);
     const members = await this.memberService.getMembersPagination(
       options,
       pageNumber,
@@ -187,9 +185,9 @@ export class MemberController {
   }
 
   // Fetch all members
-  @Get('/all/')
-  async getAllMembers(@Res() res) {
-    const members = await this.memberService.getAllMembers();
-    return res.status(HttpStatus.OK).json(members);
-  }
+  // @Get('/all/')
+  // async getAllMembers(@Res() res) {
+  //   const members = await this.memberService.getAllMembers();
+  //   return res.status(HttpStatus.OK).json(members);
+  // }
 }
