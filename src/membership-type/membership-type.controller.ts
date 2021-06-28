@@ -10,16 +10,20 @@ import {
   Put,
   Query,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { MembershipTypeService } from './membership-type.service';
 import { CreateMambershipTypeDTO } from './dto/create-membershipType.dto';
 import { ValidateObjectId } from '../member/shared/pipes/validate-object-id.pipes';
+
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('')
 export class MembershipTypeController {
   constructor(private membershipTypeService: MembershipTypeService) {}
 
   // Submit a MambershipType
+  @UseGuards(AuthGuard('jwt'))
   @Post('/membershiptype/create')
   async addMambershipType(
     @Res() res,
@@ -36,6 +40,7 @@ export class MembershipTypeController {
   }
 
   // Edit a particular MambershipType using ID
+  @UseGuards(AuthGuard('jwt'))
   @Put('/membershiptype/edit/:MambershipTypeID')
   async editMambershipType(
     @Res() res,
@@ -57,6 +62,7 @@ export class MembershipTypeController {
   }
 
   // Delete a MambershipType using ID
+  @UseGuards(AuthGuard('jwt'))
   @Delete('/membershiptype/delete/:MambershipTypeID')
   async deleteMambershipType(
     @Res() res,
@@ -74,6 +80,7 @@ export class MembershipTypeController {
   }
 
   // Fetch a particular MambershipType using ID
+  @UseGuards(AuthGuard('jwt'))
   @Get('/membershiptype/:MambershipTypeID')
   async getMambershipType(
     @Res() res,
@@ -88,6 +95,7 @@ export class MembershipTypeController {
     return res.status(HttpStatus.OK).json(MambershipType);
   }
   // Fetch all MambershipTypes
+  @UseGuards(AuthGuard('jwt'))
   @Get('/membershiptypes')
   async getMambershipTypes(@Res() res) {
     const MambershipTypes =

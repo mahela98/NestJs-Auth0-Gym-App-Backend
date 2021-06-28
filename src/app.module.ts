@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MemberModule } from './member/member.module';
 import { MembershipTypeModule } from './membership-type/membership-type.module';
+import { AuthzModule } from './authz/authz.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { MembershipTypeModule } from './membership-type/membership-type.module';
     }),
     MembershipTypeModule,
     MemberModule,
+    AuthzModule,
   ],
   controllers: [AppController],
   providers: [AppService],
