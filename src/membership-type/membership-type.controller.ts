@@ -17,6 +17,8 @@ import { CreateMambershipTypeDTO } from './dto/create-membershipType.dto';
 import { ValidateObjectId } from '../member/shared/pipes/validate-object-id.pipes';
 
 import { AuthGuard } from '@nestjs/passport';
+import { Permissions } from '../permissions.decorator';
+import { PermissionsGuard } from '../permissions.guard';
 
 @Controller('')
 export class MembershipTypeController {
@@ -95,8 +97,9 @@ export class MembershipTypeController {
     return res.status(HttpStatus.OK).json(MambershipType);
   }
   // Fetch all MambershipTypes
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'),PermissionsGuard)
   @Get('/membershiptypes')
+  @Permissions('read:membershiptypes')
   async getMambershipTypes(@Res() res) {
     const MambershipTypes =
       await this.membershipTypeService.getMembershipTypes();
