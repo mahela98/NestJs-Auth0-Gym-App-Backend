@@ -12,6 +12,7 @@ import { AuthzModule } from './authz/authz.module';
       
       useNewUrlParser: true,
       useFindAndModify: false,
+      useCreateIndex:true,
     }),
     MembershipTypeModule,
     MemberModule,

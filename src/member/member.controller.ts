@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Param,
   NotFoundException,
+  NotAcceptableException,
   Post,
   Body,
   Put,
@@ -32,9 +33,9 @@ export class MemberController {
   async addMember(@Res() res, @Body() createMemberDTO: CreateMemberDTO) {
     //
     try {
-      const MambershipType = await this.membershipTypeService.getMembershipType(
-        createMemberDTO.membershiptype,
-      );
+      // const MambershipType = await this.membershipTypeService.getMembershipType(
+      //   createMemberDTO.membershiptype,
+      // );
 
       const newMember = await this.memberService.addMember(createMemberDTO);
       return res.status(HttpStatus.OK).json({
@@ -42,7 +43,7 @@ export class MemberController {
         member: newMember,
       });
     } catch (error) {
-      throw new NotFoundException('MambershipType does not exist!');
+      throw new NotAcceptableException( `${error.message}`);
     }
   }
 

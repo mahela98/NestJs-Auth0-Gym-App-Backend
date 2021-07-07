@@ -1,8 +1,8 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsDateString, IsDefined } from 'class-validator';
-import { memory } from 'console';
 import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 import { MembershipType } from '../../membership-type/schemas/membershipType.schema';
+import * as uniqueValidator from 'mongoose-unique-validator';
 
 export type MemberSchema = Member & Document;
 
@@ -17,10 +17,10 @@ export class Member {
   @Prop({ required: true })
   last_name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true , unique: true})
   email: string;
 
-  @Prop()
+  @Prop({ required: true })
   mobile: string;
 
   @Prop()
@@ -38,7 +38,7 @@ export class Member {
   @Prop(
     raw({
       passport_number: { type: String },
-      nic_number: { type: String },
+      nic_number: { type: String ,unique: true},
     }),
   )
   nationality: Record<string, any>;
@@ -51,4 +51,4 @@ export class Member {
   membershiptype: MembershipType;
 }
 
-export const MemberSchema = SchemaFactory.createForClass(Member);
+export const MemberSchema = SchemaFactory.createForClass(Member).plugin(uniqueValidator,{ message: 'Error, expected {PATH} to be unique.' });
