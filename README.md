@@ -1,4 +1,4 @@
-# Backend for a Gym application using NestJs, Auth0 and MongoDb
+# Backend for a Gym application using NestJs, Auth0 and MongoDB
 
 ### To start
   - start mongodb
@@ -55,6 +55,8 @@
  
  </td>   
 
+</tr>
+<tr>
 <td>
 
 #### Membership Type
@@ -68,8 +70,17 @@
   </tr> 
 </table>
 
+## Screenshots
+
+![Untitled](https://user-images.githubusercontent.com/59562575/133206666-066e0876-936d-4634-b651-4aef8499f9e7.jpg)
+- 
+![as](https://user-images.githubusercontent.com/59562575/133206692-72af8c4f-090e-451b-be1d-98a446cc2b00.jpg)
+- 
+![end](https://user-images.githubusercontent.com/59562575/133206699-84118685-72ed-45b7-b5bb-4de101dec3ab.jpg)
+
+
    ### Used URL's 
-  Developing a Secure API with NestJS: Managing Identity
+  - Developing a Secure API with NestJS: Managing Identity
       - https://auth0.com/blog/developing-a-secure-api-with-nestjs-adding-authorization/#Enable-CORS-in-NestJS
-  Developing a Secure API with NestJS: Managing Roles
+  - Developing a Secure API with NestJS: Managing Roles
     - https://auth0.com/blog/developing-a-secure-api-with-nestjs-adding-role-based-access-control/
